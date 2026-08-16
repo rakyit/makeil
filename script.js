@@ -1,7 +1,7 @@
-const truePassword = "kamu"; // Password awal
+const truePassword = "kamu"; // Password slide 1
 const pesanSurat = "Makasih ya udah mau ngeluangin waktu buat maenin game dan liat foto-foto kita. Dari awal kenal sampai sekarang, kehadiran kamu selalu jadi hal manis buat aku. Makanya hari ini aku pengen jujur sama kamu...";
 
-// Data 6 Foto (Upload foto1.jpg s/d foto6.jpg di GitHub)
+// Data Foto (Upload foto1.jpg s/d foto6.jpg di GitHub)
 const photos = [
   { src: "foto1.jpg", desc: "Momen favorit pertama bareng kamu 💖" },
   { src: "foto2.jpg", desc: "Lucu banget ekspresi kamu di sini 🥰" },
@@ -43,31 +43,71 @@ function checkPassword() {
   else document.getElementById("errorMsg").innerText = "Salah dong, coba lagi! 😜";
 }
 
-/* ---- GAME 1: CARI KATA (DUBAI) ---- */
-const gridData = ['D','U','B','A','I','X','K','O','P','L','S','A','Y','A','N','M','A','N','I','S','C','O','O','K','I'];
+/* ---- GAME 1: CARI 6 KATA ---- */
+const targetWords = ["DUBAI", "MANIS", "SAYANG", "CINTA", "COOKIE", "KAMU"];
+let foundWords = [];
 let selectedWord = "";
+
+// Grid 8x8 berisi kata rahasia & huruf acak
+const gridData = [
+  'D','U','B','A','I','X','K','O',
+  'M','A','N','I','S','P','L','S',
+  'S','A','Y','A','N','G','A','N',
+  'C','I','N','T','A','M','N','I',
+  'C','O','O','K','I','E','S','C',
+  'K','A','M','U','R','A','K','Y',
+  'H','E','A','R','T','L','O','V',
+  'B','A','B','Y','G','I','R','L'
+];
 
 function initWordSearch() {
   const container = document.getElementById("word-grid");
   container.innerHTML = "";
   selectedWord = "";
+  foundWords = [];
+
+  // Reset tag kata
+  targetWords.forEach(w => {
+    const el = document.getElementById(`target-${w}`);
+    if (el) el.classList.remove("found");
+  });
+
   gridData.forEach((char) => {
     const cell = document.createElement("div");
     cell.classList.add("grid-cell");
     cell.innerText = char;
+
     cell.onclick = () => {
       cell.classList.toggle("selected");
-      if (cell.classList.contains("selected")) selectedWord += char;
-      if (selectedWord.includes("DUBAI")) {
-        alert("Hore! Kamu berhasil menemukan kata DUBAI! 🎉");
-        nextSlide('slide3');
-      }
+      
+      // Ambil semua huruf yang terpilih
+      let currentSelection = "";
+      document.querySelectorAll(".grid-cell.selected").forEach(c => {
+        currentSelection += c.innerText;
+      });
+
+      // Cek apakah membentuk salah satu kata target
+      targetWords.forEach(word => {
+        if (currentSelection.includes(word) && !foundWords.includes(word)) {
+          foundWords.push(word);
+          const wordTag = document.getElementById(`target-${word}`);
+          if (wordTag) wordTag.classList.add("found");
+
+          // Jika semua 6 kata sudah ditemukan
+          if (foundWords.length === targetWords.length) {
+            setTimeout(() => {
+              alert("Hebat banget! Kamu berhasil menemukan semua 6 kata rahasia! 🎉💖");
+              nextSlide('slide3');
+            }, 300);
+          }
+        }
+      });
     };
     container.appendChild(cell);
   });
 }
 
-/* ---- GAME 2: TANGKAP COOKIE (DENGAN TIMER) ---- */
+/* ---- GAME 2: TANGKAP COOKIE DENGAN TIMER ---- */
 function startGame() {
   score = 0;
   timeLeft = 15;
@@ -90,7 +130,6 @@ function startGame() {
 
   stopGame();
 
-  // Timer Hitung Mundur 15 Detik
   timerInterval = setInterval(() => {
     timeLeft--;
     document.getElementById("timer").innerText = timeLeft;
@@ -106,7 +145,6 @@ function startGame() {
     }
   }, 1000);
 
-  // Buat Cookie Jatuh
   gameInterval = setInterval(() => createCookie(), 700);
 }
 
@@ -179,7 +217,6 @@ function acceptedConfess() {
   document.getElementById("confessSub").innerText = "Makasih udah mau jadi pacar aku! ✨";
   document.getElementById("confessButtons").style.display = "none";
   
-  // Munculkan Hujan/Percikan Bunga
   startFlowerRain();
 }
 
