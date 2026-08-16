@@ -3,12 +3,12 @@ const pesanSurat = "Aku gak tau harus mulai dari mana, karena honestly, aku masi
 
 // Data Foto (Pastikan foto1.jpg s/d foto6.jpg sudah di-upload ke GitHub)
 const photos = [
-  { src: "foto1.jpg", desc: "Momen favorit pertama bareng kamu 💖" },
-  { src: "foto2.jpg", desc: "Lucu banget ekspresi kamu di sini 🥰" },
-  { src: "foto3.jpg", desc: "Kenangan manis yang gak bakal aku lupain ✨" },
-  { src: "foto4.jpg", desc: "Selalu suka kalau ngeliat foto ini 📸" },
-  { src: "foto5.jpg", desc: "Hari dimana kita banyak ketawa bareng 😂" },
-  { src: "foto6.jpg", desc: "Foto terindah bareng orang paling favorit ❤️" }
+  { src: "foto1.jpg", desc: "Mamm barengg, manja ya?" },
+  { src: "foto2.jpg", desc: "Sosok orang menggemaskan > kiri akuu" },
+  { src: "foto3.jpg", desc: "Dihhhhh jorokk, abis apa kamu sayang?" },
+  { src: "foto4.jpg", desc: "Ripyu skinker Adek" },
+  { src: "foto5.jpg", desc: "Sipaling kepo emang, makasih Adek udah nemenin kerja" },
+  { src: "foto6.jpg", desc: "Kalo di FTV judulnya apa? kenek & gadis desa??? XD" }
 ];
 
 let currentPhoto = 0;
