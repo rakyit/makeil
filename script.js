@@ -1,19 +1,20 @@
-const truePassword = "kamu"; // Ganti password di sini (huruf kecil)
+const truePassword = "kamu"; // Password awal
 const pesanSurat = "Makasih ya udah mau ngeluangin waktu buat maenin game dan liat foto-foto kita. Dari awal kenal sampai sekarang, kehadiran kamu selalu jadi hal manis buat aku. Makanya hari ini aku pengen jujur sama kamu...";
 
-// Data 6 Foto Pinterest Langsung (Langsung Bisa Diakses!)
+// Data 6 Foto (Upload foto1.jpg s/d foto6.jpg di GitHub)
 const photos = [
-  { src: "https://i.pinimg.com/736x/2b/9b/77/2b9b77d6118d098e9a6ef77732d84db8.jpg", desc: "Momen favorit pertama bareng kamu 💖" },
-  { src: "https://i.pinimg.com/736x/d9/38/54/d93854930f7bb0039a8501533e414c5b.jpg", desc: "Lucu banget ekspresi kamu di sini 🥰" },
-  { src: "https://i.pinimg.com/736x/8f/33/20/8f3320295eb13813894db896264d84f1.jpg", desc: "Kenangan manis yang gak bakal aku lupain ✨" },
-  { src: "https://i.pinimg.com/736x/44/2c/3f/442c3f76903fbcf83ca649be11e5f03f.jpg", desc: "Selalu suka kalau ngeliat foto ini 📸" },
-  { src: "https://i.pinimg.com/736x/ee/93/29/ee9329cb67e41bdca6b245ddbd588147.jpg", desc: "Hari dimana kita banyak ketawa bareng 😂" },
-  { src: "https://i.pinimg.com/736x/29/77/b1/2977b10294155a557a1b02d84ee5e1df.jpg", desc: "Foto terindah bareng orang paling favorit ❤️" }
+  { src: "foto1.jpg", desc: "Momen favorit pertama bareng kamu 💖" },
+  { src: "foto2.jpg", desc: "Lucu banget ekspresi kamu di sini 🥰" },
+  { src: "foto3.jpg", desc: "Kenangan manis yang gak bakal aku lupain ✨" },
+  { src: "foto4.jpg", desc: "Selalu suka kalau ngeliat foto ini 📸" },
+  { src: "foto5.jpg", desc: "Hari dimana kita banyak ketawa bareng 😂" },
+  { src: "foto6.jpg", desc: "Foto terindah bareng orang paling favorit ❤️" }
 ];
 
 let currentPhoto = 0;
 let score = 0;
-let gameInterval;
+let timeLeft = 15;
+let gameInterval, timerInterval;
 let i = 0;
 let isTyped = false;
 let yesScale = 1;
@@ -31,7 +32,7 @@ function nextSlide(slideId) {
   if (target) target.classList.add('active');
 
   if (slideId === 'slide2') initWordSearch();
-  if (slideId === 'slide3') startGame(); else clearInterval(gameInterval);
+  if (slideId === 'slide3') startGame(); else stopGame();
   if (slideId === 'slide5') updateGallery();
   if (slideId === 'slide6' && !isTyped) { typeWriter(); isTyped = true; }
 }
@@ -66,10 +67,13 @@ function initWordSearch() {
   });
 }
 
-/* ---- GAME 2: TANGKAP COOKIE ---- */
+/* ---- GAME 2: TANGKAP COOKIE (DENGAN TIMER) ---- */
 function startGame() {
   score = 0;
+  timeLeft = 15;
   document.getElementById("score").innerText = score;
+  document.getElementById("timer").innerText = timeLeft;
+
   const container = document.getElementById("game-container");
   const basket = document.getElementById("basket");
 
@@ -84,14 +88,37 @@ function startGame() {
     basket.style.left = x + "px";
   }
 
+  stopGame();
+
+  // Timer Hitung Mundur 15 Detik
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById("timer").innerText = timeLeft;
+    if (timeLeft <= 0) {
+      stopGame();
+      if (score >= 5) {
+        alert(`Hebat! Kamu berhasil nangkep ${score} Dubai Cookie! 🥳✨`);
+        nextSlide('slide4');
+      } else {
+        alert(`Waktu habis! Kamu cuma dapet ${score} cookie. Coba lagi ya! 😜`);
+        startGame();
+      }
+    }
+  }, 1000);
+
+  // Buat Cookie Jatuh
+  gameInterval = setInterval(() => createCookie(), 700);
+}
+
+function stopGame() {
   clearInterval(gameInterval);
-  gameInterval = setInterval(() => createCookie(), 1000);
+  clearInterval(timerInterval);
 }
 
 function createCookie() {
   const container = document.getElementById("game-container");
   const basket = document.getElementById("basket");
-  if (!container || score >= 5) return;
+  if (!container || timeLeft <= 0) return;
 
   const cookie = document.createElement("div");
   cookie.classList.add("cookie");
@@ -101,7 +128,7 @@ function createCookie() {
 
   let posY = 0;
   const fall = setInterval(() => {
-    posY += 3;
+    posY += 4;
     cookie.style.top = posY + "px";
     const cRect = cookie.getBoundingClientRect();
     const bRect = basket.getBoundingClientRect();
@@ -111,10 +138,6 @@ function createCookie() {
       document.getElementById("score").innerText = score;
       cookie.remove();
       clearInterval(fall);
-      if (score >= 5) {
-        clearInterval(gameInterval);
-        setTimeout(() => { alert("Semua Dubai Cookie berhasil dikeranjangin! 🥳"); nextSlide('slide4'); }, 300);
-      }
     }
     if (posY > container.clientHeight) { cookie.remove(); clearInterval(fall); }
   }, 20);
@@ -139,7 +162,7 @@ function typeWriter() {
   }
 }
 
-/* ---- LOGIKA TOMBOL CONFESS ---- */
+/* ---- LOGIKA TOMBOL CONFESS & EFEK BUNGA ---- */
 function shrinkNoBtn() {
   yesScale += 0.35;
   noScale -= 0.18;
@@ -152,5 +175,26 @@ function shrinkNoBtn() {
 }
 
 function acceptedConfess() {
-  alert("YEAYYYY! I love you so much! ❤️💐 Terima kasih udah mau jadi pacar aku!");
+  document.getElementById("confessTitle").innerText = "YEAYYYY! I Love You! ❤️💐";
+  document.getElementById("confessSub").innerText = "Makasih udah mau jadi pacar aku! ✨";
+  document.getElementById("confessButtons").style.display = "none";
+  
+  // Munculkan Hujan/Percikan Bunga
+  startFlowerRain();
+}
+
+function startFlowerRain() {
+  const container = document.getElementById("flowerContainer");
+  const flowers = ['🌸', '🌺', '🌹', '💐', '🌷', '✨', '💖'];
+
+  setInterval(() => {
+    const flower = document.createElement("div");
+    flower.classList.add("flower");
+    flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+    flower.style.left = Math.random() * 100 + "vw";
+    flower.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    container.appendChild(flower);
+
+    setTimeout(() => flower.remove(), 4000);
+  }, 100);
 }
