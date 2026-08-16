@@ -8,6 +8,9 @@
 </head>
 <body>
 
+  <!-- Container Efek Bunga Berjatuhan -->
+  <div id="flowerContainer"></div>
+
   <audio id="bgMusic" loop>
     <source src="lagu.mp3.mp3" type="audio/mpeg">
   </audio>
@@ -29,11 +32,14 @@
     <p id="wordMsg" class="error"></p>
   </div>
 
-  <!-- Slide 3: Catch Dubai Cookie -->
+  <!-- Slide 3: Catch Dubai Cookie dengan Timer -->
   <div id="slide3" class="card">
     <h1>Catch The Dubai Cookie! 🍪</h1>
-    <p>Tangkap 5 Dubai Chewy Cookie untuk lanjut!</p>
-    <div class="score-board">Terkeranjang: <span id="score">0</span>/5</div>
+    <p>Tangkap cookie sebanyak-banyaknya dalam 15 detik!</p>
+    <div class="game-stats">
+      <span>Waktu: <b id="timer">15</b>s</span> | 
+      <span>Skor: <b id="score">0</b></span>
+    </div>
     <div id="game-container">
       <div id="basket">🧺</div>
     </div>
@@ -84,11 +90,11 @@
     <button onclick="nextSlide('slide7')">Ada Satu Pertanyaan... 👉</button>
   </div>
 
-  <!-- Slide 7: Confess + Tombol Membesar -->
+  <!-- Slide 7: Confess + Efek Bunga -->
   <div id="slide7" class="card">
-    <h1>Will You Be My Partner? 💍❤️</h1>
-    <p>Kamu mau gak jadi pacar aku?</p>
-    <div class="confess-buttons">
+    <h1 id="confessTitle">Will You Be My Partner? 💍❤️</h1>
+    <p id="confessSub">Kamu mau gak jadi pacar aku?</p>
+    <div class="confess-buttons" id="confessButtons">
       <button id="btnYes" onclick="acceptedConfess()">Mau Banget! ❤️</button>
       <button id="btnNo" onclick="shrinkNoBtn()">Enggak 😜</button>
     </div>
