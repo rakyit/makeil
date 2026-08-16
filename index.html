@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesan Spesial 💐</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Tempat Efek Hujan Kelopak Bunga -->
+  <div id="petals-container"></div>
+
+  <!-- Musik Background -->
+  <audio id="bgMusic" loop>
+    <!-- Ganti lagu.mp3 sesuai nama file lagu kamu jika ada -->
+    <source src="lagu.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+    <div class="card">
+      <h1 id="title">Ada pesan buat kamu! 💐</h1>
+      <p id="message">Klik tombol di bawah untuk membuka ucapan.</p>
+      
+      <div class="buttons">
+        <button id="btnOpen" onclick="bukaPesan()">Buka Pesan</button>
+        <button id="btnNo" onmouseover="kabur()" onclick="kabur()">Nggak Mau</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
