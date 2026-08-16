@@ -1,58 +1,132 @@
-// Teks pesan confess kamu (bisa diubah sesuai keinginan)
-const teksPesan = "Dari pertama kenal, aku udah ngerasa kamu beda. Mau gak kamu jalanin hari-hari kedepan bareng aku? ❤️";
+const truePassword = "kamu"; // Ganti password di sini (huruf kecil)
+const pesanSurat = "Makasih ya udah keranjangin semua Dubai Chewy Cookie-nya! Sama kayak cookie tadi, hadirnya kamu itu manis dan spesial banget buat aku. Tetap sama aku terus ya! I love you so much! ❤️";
+
+let score = 0;
+let gameInterval;
 let i = 0;
+let isTyped = false;
 
-// Efek Mengetik Otomatis
-function typeWriter() {
-  if (i < teksPesan.length) {
-    document.getElementById("message").innerHTML += teksPesan.charAt(i);
-    i++;
-    setTimeout(typeWriter, 50);
-  }
-}
-
-// Fungsi saat tombol "Buka Pesan" diklik
-function bukaPesan() {
-  // Putar musik jika ada file lagu.mp3
+function playMusic() {
   const music = document.getElementById("bgMusic");
-  if (music) {
+  if (music && music.paused) {
     music.play().catch(() => {});
   }
-
-  document.getElementById("title").innerText = "Untuk Kamu ✨";
-  document.getElementById("message").innerText = ""; 
-  document.getElementById("btnOpen").style.display = "none";
-  document.getElementById("btnNo").style.display = "none";
-  
-  typeWriter();
 }
 
-// Fungsi tombol "Nggak Mau" kabur
-function kabur() {
-  const btnNo = document.getElementById("btnNo");
-  const x = Math.floor(Math.random() * (window.innerWidth - 100));
-  const y = Math.floor(Math.random() * (window.innerHeight - 50));
+function nextSlide(slideId) {
+  playMusic();
   
-  btnNo.style.left = x + "px";
-  btnNo.style.top = y + "px";
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => card.classList.remove('active'));
+
+  const targetSlide = document.getElementById(slideId);
+  if (targetSlide) {
+    targetSlide.classList.add('active');
+  }
+
+  if (slideId === 'slide2') {
+    startGame();
+  } else {
+    clearInterval(gameInterval);
+  }
+
+  if (slideId === 'slide5' && !isTyped) {
+    typeWriter();
+    isTyped = true;
+  }
 }
 
-// Pembuat Efek Kelopak Bunga Jatuh
-function createPetal() {
-  const container = document.getElementById('petals-container');
-  if (!container) return;
-  
-  const petal = document.createElement('div');
-  petal.classList.add('petal');
-  
-  const size = Math.random() * 15 + 10;
-  petal.style.width = `${size}px`;
-  petal.style.height = `${size}px`;
-  petal.style.left = `${Math.random() * 100}vw`;
-  petal.style.animationDuration = `${Math.random() * 3 + 2}s`;
-  
-  container.appendChild(petal);
-  setTimeout(() => petal.remove(), 5000);
+function checkPassword() {
+  const input = document.getElementById("passInput").value.toLowerCase().trim();
+  const errorMsg = document.getElementById("errorMsg");
+
+  if (input === truePassword) {
+    nextSlide('slide2');
+  } else {
+    errorMsg.innerText = "Jawaban salah, coba lagi dong! 😜";
+  }
 }
 
-setInterval(createPetal, 300);
+// Logika Game Tangkap Cookie
+function startGame() {
+  score = 0;
+  document.getElementById("score").innerText = score;
+  const container = document.getElementById("game-container");
+  const basket = document.getElementById("basket");
+
+  // Kontrol Keranjang dengan Mouse / Sentuhan Layar
+  container.onmousemove = (e) => moveBasket(e.clientX);
+  container.ontouchmove = (e) => moveBasket(e.touches[0].clientX);
+
+  function moveBasket(clientX) {
+    const rect = container.getBoundingClientRect();
+    let x = clientX - rect.left - 20;
+    if (x < 0) x = 0;
+    if (x > rect.width - 40) x = rect.width - 40;
+    basket.style.left = x + "px";
+  }
+
+  // Buat Cookie jatuh setiap 1 detik
+  clearInterval(gameInterval);
+  gameInterval = setInterval(() => {
+    createCookie();
+  }, 1000);
+}
+
+function createCookie() {
+  const container = document.getElementById("game-container");
+  const basket = document.getElementById("basket");
+  if (!container || score >= 5) return;
+
+  const cookie = document.createElement("div");
+  cookie.classList.add("cookie");
+  
+  const startX = Math.random() * (container.clientWidth - 45);
+  cookie.style.left = startX + "px";
+  cookie.style.top = "0px";
+  container.appendChild(cookie);
+
+  let posY = 0;
+  const fall = setInterval(() => {
+    posY += 3;
+    cookie.style.top = posY + "px";
+
+    // Cek tabrakan cookie dengan keranjang
+    const cookieRect = cookie.getBoundingClientRect();
+    const basketRect = basket.getBoundingClientRect();
+
+    if (
+      cookieRect.bottom >= basketRect.top &&
+      cookieRect.top <= basketRect.bottom &&
+      cookieRect.right >= basketRect.left &&
+      cookieRect.left <= basketRect.right
+    ) {
+      score++;
+      document.getElementById("score").innerText = score;
+      cookie.remove();
+      clearInterval(fall);
+
+      if (score >= 5) {
+        clearInterval(gameInterval);
+        setTimeout(() => {
+          alert("Yeay! Semua Dubai Cookie berhasil dikeranjangin! 🥳✨");
+          nextSlide('slide3');
+        }, 300);
+      }
+    }
+
+    // Hapus jika lolos jatuh ke bawah
+    if (posY > container.clientHeight) {
+      cookie.remove();
+      clearInterval(fall);
+    }
+  }, 20);
+}
+
+function typeWriter() {
+  if (i < pesanSurat.length) {
+    document.getElementById("typedText").innerHTML += pesanSurat.charAt(i);
+    i++;
+    setTimeout(typeWriter, 40);
+  }
+}
