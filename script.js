@@ -1,9 +1,5 @@
 const truePassword = "JUNE 17"; // Password slide 1
-const pesanSurat = "Aku gak tau harus mulai dari mana, karena honestly, aku masih suka heran gimana kita bisa sampai di titik ini. Pdhl kita dulu cuman jadi temen saling cerita soal orang yang kita sayang, saling dengerin cerita masing-masing, sampai akhirnya somehow orang yang dulu cuma jadi tempat cerita malah jadi orang yang paling aku sayang.
-
-Aku juga gak pernah nyangka bakal secepat ini bisa sayang sama kamu setelah semua yang kemarin. I thought I’d need more time to trust someone again, tapi ternyata sama kamu semuanya datang naturally. Aku gak pernah ngerasa harus maksa diri buat sayang sama kamu. It just happened, and somehow it feels right. Aku suka cara kamu sayang sama aku. Cara kamu nanyain kabarku, khawatirin aku, dengerin aku, sampai hal-hal kecil yang mungkin menurut kamu biasa aja tapi berarti banget buat aku. 
-
-Makasih udah percaya sama aku. Makasih udah berani sayang sama aku sebesar ini. Makasih juga karena kamu bikin aku ngerasa aman buat buka hati lagi. Kamu gak perlu jadi siapa-siapa selain diri kamu sendiri buat bisa dicintai sama aku. You deserve to be loved, fully and sincerely, and I want to be someone who gives you that.";
+const pesanSurat = "Aku gak tau harus mulai dari mana, karena honestly, aku masih suka heran gimana kita bisa sampai di titik ini. Pdhl kita dulu cuman jadi temen saling cerita soal orang yang kita sayang, saling dengerin cerita masing-masing, sampai akhirnya somehow orang yang dulu cuma jadi tempat cerita malah jadi orang yang paling aku sayang. Aku juga gak pernah nyangka bakal secepat ini bisa sayang sama kamu setelah semua yang kemarin. I thought I’d need more time to trust someone again, tapi ternyata sama kamu semuanya datang naturally. Aku gak pernah ngerasa harus maksa diri buat sayang sama kamu. It just happened, and somehow it feels right. Aku suka cara kamu sayang sama aku. Cara kamu nanyain kabarku, khawatirin aku, dengerin aku, sampai hal-hal kecil yang mungkin menurut kamu biasa aja tapi berarti banget buat aku. Makasih udah percaya sama aku. Makasih udah berani sayang sama aku sebesar ini. Makasih juga karena kamu bikin aku ngerasa aman buat buka hati lagi. Kamu gak perlu jadi siapa-siapa selain diri kamu sendiri buat bisa dicintai sama aku. You deserve to be loved, fully and sincerely, and I want to be someone who gives you that..";
 
 // Data Foto (Pastikan foto1.jpg s/d foto6.jpg sudah di-upload ke GitHub)
 const photos = [
@@ -48,19 +44,19 @@ function checkPassword() {
 }
 
 /* ---- GAME 1: CARI 6 KATA (LOGIKA FIX TANPA STUCK) ---- */
-const targetWords = ["DUBAI", "MANIS", "SAYANG", "CINTA", "COOKIE", "KAMU"];
+const targetWords = ["DIMSUM", "MANIS", "SAYANG", "CINTA", "BABY", "MAKAIO"];
 let foundWords = [];
 
 // Grid 8x8 variatif
 const gridData = [
-  'D','S','M','A','N','I','S','C',
-  'U','A','K','A','M','U','O','I',
-  'B','Y','Y','P','Q','O','N','N',
-  'A','A','A','A','K','T','L','T',
-  'I','N','N','N','I','A','T','A',
-  'R','G','G','G','E','E','O','L',
+  'D','S','M','A','P','O','S','C',
+  'I','M','A','A','M','U','O','I',
+  'M','Y','K','P','N','O','N','N',
+  'S','W','A','A','K','I','L','T',
+  'U','N','I','N','I','A','S','A',
+  'M','G','O','G','E','E','O','L',
   'X','M','S','A','Y','A','N','G',
-  'C','O','O','K','I','E','H','K'
+  'C','B','A','B','Y','E','H','K'
 ];
 
 function initWordSearch() {
@@ -115,7 +111,7 @@ function checkWords() {
         // Jika 6 kata sudah tercoret semua
         if (foundWords.length === targetWords.length) {
           setTimeout(() => {
-            alert("WOAH HEBAT! Semua 6 kata berhasil kamu temukan! 🎉💖");
+            alert("HAHAHAAA Sayangku Kerennnn, prouddddddd");
             nextSlide('slide3');
           }, 300);
         }
@@ -153,10 +149,10 @@ function startGame() {
     if (timeLeft <= 0) {
       stopGame();
       if (score >= 7) {
-        alert(`JAGO BANGET! Kamu nangkep ${score} Dubai Cookie! 🥳✨`);
+        alert(`HEBATNYA ADEK, Mam ya siwi kukisnya`);
         nextSlide('slide4');
       } else {
-        alert(`Waktu habis! Cuma dapet ${score}/7 cookie. Coba lagi ya! 😜`);
+        alert(`YAHHH pAYAHHH Cuma dapet ${score}/7 cookie. Coba lagi!!`);
         startGame();
       }
     }
@@ -230,8 +226,8 @@ function shrinkNoBtn() {
 }
 
 function acceptedConfess() {
-  document.getElementById("confessTitle").innerText = "YEAYYYY! I Love You! ❤️💐";
-  document.getElementById("confessSub").innerText = "Makasih udah mau jadi pacar aku! ✨";
+  document.getElementById("confessTitle").innerText = "YESS AKHIRNYA KITA OFFICIAL YAHAHAHAHAHAHAHAHA";
+  document.getElementById("confessSub").innerText = " setelah sekian lama sayang-sayangan tanpa status, welcome to my boyfriend era REALLLL";
   document.getElementById("confessButtons").style.display = "none";
   
   startFlowerRain();
