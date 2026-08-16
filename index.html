@@ -12,7 +12,7 @@
     <source src="lagu.mp3.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Slide 1: Tebak-tebakan -->
+  <!-- Slide 1: Password -->
   <div id="slide1" class="card active">
     <h1>Tebak-tebakan Dulu! 🔐</h1>
     <p>Siapa orang paling manis & favorit kamu?</p>
@@ -21,46 +21,77 @@
     <p id="errorMsg" class="error"></p>
   </div>
 
-  <!-- Slide 2: Mini Game Tangkap Dubai Chewy Cookie -->
+  <!-- Slide 2: Word Search Game -->
   <div id="slide2" class="card">
+    <h1>Teka-Teki Cari Kata 🧩</h1>
+    <p>Temukan kata rahasia: <b id="targetWord">DUBAI</b></p>
+    <div id="word-grid" class="grid-container"></div>
+    <p id="wordMsg" class="error"></p>
+  </div>
+
+  <!-- Slide 3: Catch Dubai Cookie -->
+  <div id="slide3" class="card">
     <h1>Catch The Dubai Cookie! 🍪</h1>
-    <p>Tangkap 5 Dubai Chewy Cookie pakai keranjang untuk lanjut!</p>
+    <p>Tangkap 5 Dubai Chewy Cookie untuk lanjut!</p>
     <div class="score-board">Terkeranjang: <span id="score">0</span>/5</div>
-    
     <div id="game-container">
       <div id="basket">🧺</div>
     </div>
   </div>
 
-  <!-- Slide 3: The Reasons I Love You -->
-  <div id="slide3" class="card">
-    <h1>The Reasons I Love You 💌</h1>
-    <ul class="reason-list">
-      <li>✨ Senyuman kamu selalu bikin hariku makin cerah.</li>
-      <li>✨ Kamu selalu sabar dan ngertiin aku.</li>
-      <li>✨ Cara kamu merhatiin hal-hal kecil tentang aku.</li>
-      <li>✨ Kamu bikin aku merasa jadi orang paling beruntung.</li>
-    </ul>
-    <button onclick="nextSlide('slide4')">Lihat Kenangan 📸</button>
-  </div>
-
-  <!-- Slide 4: Photo Memories -->
+  <!-- Slide 4: 10 Reasons I Love You -->
   <div id="slide4" class="card">
-    <h1>Our Special Moment 📸</h1>
-    <div class="photo-frame">
-      <img src="foto1.jpg" alt="Foto Kita">
+    <h1>10 Reasons I Love You 💌</h1>
+    <div class="reason-box">
+      <ol class="reason-list">
+        <li>✨ Senyuman kamu selalu mencerahkan hariku.</li>
+        <li>✨ Kamu selalu sabar dan mengerti aku.</li>
+        <li>✨ Perhatian kecil kamu yang bikin meleleh.</li>
+        <li>✨ Suara dan tawa kamu favoritku.</li>
+        <li>✨ Kamu selalu mendukung hal yang aku suka.</li>
+        <li>✨ Karena kamu adalah pendengar terbaik.</li>
+        <li>✨ Kehadiranmu bikin aku merasa aman.</li>
+        <li>✨ Kamu bikin aku jadi versi terbaik diriku.</li>
+        <li>✨ Kebersamaan kita selalu seru & menyenangkan.</li>
+        <li>✨ Karena kamu adalah kamu, tanpa perlu jadi orang lain.</li>
+      </ol>
     </div>
-    <p>Setiap detik bareng kamu itu berharga banget.</p>
-    <button onclick="nextSlide('slide5')">Baca Surat Untukmu ✉️</button>
+    <button onclick="nextSlide('slide5')">Lihat Kenangan Kita 📸</button>
   </div>
 
-  <!-- Slide 5: Surat Confess Utama -->
+  <!-- Slide 5: Galeri 6 Foto + Deskripsi -->
   <div id="slide5" class="card">
-    <h1>To My Beloved One ❤️</h1>
+    <h1>Our Precious Moments 📸</h1>
+    <div class="gallery-container">
+      <img id="galleryImg" src="" alt="Foto">
+      <p id="galleryDesc"></p>
+    </div>
+    <div class="nav-buttons">
+      <button onclick="prevPhoto()">◀ Prev</button>
+      <span id="photoNum">1/6</span>
+      <button onclick="nextPhoto()">Next ▶</button>
+    </div>
+    <br>
+    <button id="btnNextGallery" style="display:none;" onclick="nextSlide('slide6')">Baca Surat Untukmu ✉️</button>
+  </div>
+
+  <!-- Slide 6: Surat Panjang -->
+  <div id="slide6" class="card">
+    <h1>To My Beloved One 📜</h1>
     <div class="letter-box">
       <p id="typedText"></p>
     </div>
-    <button onclick="nextSlide('slide1')">Ulangi Dari Awal 🔄</button>
+    <button onclick="nextSlide('slide7')">Ada Satu Pertanyaan... 👉</button>
+  </div>
+
+  <!-- Slide 7: Confess + Tombol Membesar -->
+  <div id="slide7" class="card">
+    <h1>Will You Be My Partner? 💍❤️</h1>
+    <p>Kamu mau gak jadi pacar aku?</p>
+    <div class="confess-buttons">
+      <button id="btnYes" onclick="acceptedConfess()">Mau Banget! ❤️</button>
+      <button id="btnNo" onclick="shrinkNoBtn()">Enggak 😜</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
