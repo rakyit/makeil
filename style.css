@@ -1,94 +1,148 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 20px;
   font-family: 'Poppins', sans-serif;
-  background-color: #ffe6eb;
+  background: linear-gradient(135deg, #ffe6eb 0%, #ffd1dc 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.container {
-  text-align: center;
-  z-index: 10;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .card {
+  display: none;
   background: white;
-  padding: 30px;
+  padding: 25px;
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  max-width: 350px;
-  margin: 0 15px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.card.active {
+  display: block;
 }
 
 h1 {
   color: #ff4d6d;
-  font-size: 22px;
+  font-size: 20px;
   margin-bottom: 10px;
 }
 
 p {
-  color: #555;
-  font-size: 15px;
+  color: #444;
+  font-size: 14px;
   line-height: 1.5;
-  min-height: 45px;
 }
 
-.buttons {
-  margin-top: 20px;
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+  border: 2px solid #ff4d6d;
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+/* Arena Mini Game */
+#game-container {
   position: relative;
-  min-height: 50px;
+  width: 100%;
+  height: 260px;
+  background: #fff0f3;
+  border: 2px dashed #ff4d6d;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-top: 15px;
+  touch-action: none;
+}
+
+.score-board {
+  font-weight: bold;
+  color: #ff4d6d;
+  font-size: 16px;
+}
+
+.cookie {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-image: url('https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=200'); /* Gambar Dubai Cookie */
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#basket {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  user-select: none;
+  cursor: pointer;
+}
+
+.reason-list {
+  text-align: left;
+  padding-left: 0;
+  list-style: none;
+}
+
+.reason-list li {
+  background: #fff0f3;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #444;
+}
+
+.photo-frame img {
+  width: 100%;
+  border-radius: 12px;
+  margin: 10px 0;
+}
+
+.letter-box {
+  text-align: left;
+  background: #fff5f7;
+  padding: 12px;
+  border-radius: 12px;
+  border-left: 4px solid #ff4d6d;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 15px;
 }
 
 button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-#btnOpen {
   background-color: #ff4d6d;
   color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
 }
 
-#btnNo {
-  background-color: #ccc;
-  color: #333;
-  position: absolute;
+button:hover {
+  background-color: #ff2a55;
+  transform: scale(1.03);
 }
 
-/* --- Efek Hujan Kelopak Bunga --- */
-#petals-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.petal {
-  position: absolute;
-  background-color: #ffb7c5;
-  border-radius: 150% 0 150% 0;
-  opacity: 0.7;
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  0% {
-    transform: translateY(-10px) rotate(0deg);
-  }
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-  }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
