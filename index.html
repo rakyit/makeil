@@ -3,30 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pesan Spesial 💐</title>
+  <title>Special Gift for You 💖</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Tempat Efek Hujan Kelopak Bunga -->
-  <div id="petals-container"></div>
-
-  <!-- Musik Background -->
   <audio id="bgMusic" loop>
-    <!-- Ganti lagu.mp3 sesuai nama file lagu kamu jika ada -->
-    <source src="lagu.mp3" type="audio/mpeg">
+    <source src="lagu.mp3.mp3" type="audio/mpeg">
   </audio>
 
-  <div class="container">
-    <div class="card">
-      <h1 id="title">Ada pesan buat kamu! 💐</h1>
-      <p id="message">Klik tombol di bawah untuk membuka ucapan.</p>
-      
-      <div class="buttons">
-        <button id="btnOpen" onclick="bukaPesan()">Buka Pesan</button>
-        <button id="btnNo" onmouseover="kabur()" onclick="kabur()">Nggak Mau</button>
-      </div>
+  <!-- Slide 1: Tebak-tebakan -->
+  <div id="slide1" class="card active">
+    <h1>Tebak-tebakan Dulu! 🔐</h1>
+    <p>Siapa orang paling manis & favorit kamu?</p>
+    <input type="text" id="passInput" placeholder="Ketik jawabannya...">
+    <button onclick="checkPassword()">Buka Kunci ✨</button>
+    <p id="errorMsg" class="error"></p>
+  </div>
+
+  <!-- Slide 2: Mini Game Tangkap Dubai Chewy Cookie -->
+  <div id="slide2" class="card">
+    <h1>Catch The Dubai Cookie! 🍪</h1>
+    <p>Tangkap 5 Dubai Chewy Cookie pakai keranjang untuk lanjut!</p>
+    <div class="score-board">Terkeranjang: <span id="score">0</span>/5</div>
+    
+    <div id="game-container">
+      <div id="basket">🧺</div>
     </div>
+  </div>
+
+  <!-- Slide 3: The Reasons I Love You -->
+  <div id="slide3" class="card">
+    <h1>The Reasons I Love You 💌</h1>
+    <ul class="reason-list">
+      <li>✨ Senyuman kamu selalu bikin hariku makin cerah.</li>
+      <li>✨ Kamu selalu sabar dan ngertiin aku.</li>
+      <li>✨ Cara kamu merhatiin hal-hal kecil tentang aku.</li>
+      <li>✨ Kamu bikin aku merasa jadi orang paling beruntung.</li>
+    </ul>
+    <button onclick="nextSlide('slide4')">Lihat Kenangan 📸</button>
+  </div>
+
+  <!-- Slide 4: Photo Memories -->
+  <div id="slide4" class="card">
+    <h1>Our Special Moment 📸</h1>
+    <div class="photo-frame">
+      <img src="foto1.jpg" alt="Foto Kita">
+    </div>
+    <p>Setiap detik bareng kamu itu berharga banget.</p>
+    <button onclick="nextSlide('slide5')">Baca Surat Untukmu ✉️</button>
+  </div>
+
+  <!-- Slide 5: Surat Confess Utama -->
+  <div id="slide5" class="card">
+    <h1>To My Beloved One ❤️</h1>
+    <div class="letter-box">
+      <p id="typedText"></p>
+    </div>
+    <button onclick="nextSlide('slide1')">Ulangi Dari Awal 🔄</button>
   </div>
 
   <script src="script.js"></script>
