@@ -6,14 +6,14 @@ const photos = [
   { src: "foto1.jpg", desc: "Momen favorit pertama bareng kamu 💖" },
   { src: "foto2.jpg", desc: "Lucu banget ekspresi kamu di sini 🥰" },
   { src: "foto3.jpg", desc: "Kenangan manis yang gak bakal aku lupain ✨" },
-  { src: "foto4.jpg", desc: "Selalu suka kalau ngeliat foto ini 📸" },
+  { src: "foto4.jpg", desc: "Selalu suka kalau ngeliat foto exhibits ini 📸" },
   { src: "foto5.jpg", desc: "Hari dimana kita banyak ketawa bareng 😂" },
   { src: "foto6.jpg", desc: "Foto terindah bareng orang paling favorit ❤️" }
 ];
 
 let currentPhoto = 0;
 let score = 0;
-let timeLeft = 15;
+let timeLeft = 10;
 let gameInterval, timerInterval;
 let i = 0;
 let isTyped = false;
@@ -43,30 +43,27 @@ function checkPassword() {
   else document.getElementById("errorMsg").innerText = "Salah dong, coba lagi! 😜";
 }
 
-/* ---- GAME 1: CARI 6 KATA ---- */
+/* ---- GAME 1: CARI 6 KATA (MENYAMPING, MENURUN, MENYILANG) ---- */
 const targetWords = ["DUBAI", "MANIS", "SAYANG", "CINTA", "COOKIE", "KAMU"];
 let foundWords = [];
-let selectedWord = "";
 
-// Grid 8x8 berisi kata rahasia & huruf acak
+// Grid 8x8 variatif: Arah Menyamping (MANIS, KAMU), Menurun (DUBAI, CINTA), Menyilang (SAYANG, COOKIE)
 const gridData = [
-  'D','U','B','A','I','X','K','O',
-  'M','A','N','I','S','P','L','S',
-  'S','A','Y','A','N','G','A','N',
-  'C','I','N','T','A','M','N','I',
-  'C','O','O','K','I','E','S','C',
-  'K','A','M','U','R','A','K','Y',
-  'H','E','A','R','T','L','O','V',
-  'B','A','B','Y','G','I','R','L'
+  'D','S','M','A','N','I','S','C',
+  'U','A','K','A','M','U','O','I',
+  'B','Y','Y','P','Q','O','N','N',
+  'A','A','A','A','K','T','L','T',
+  'I','N','N','N','I','A','T','A',
+  'R','G','G','G','E','E','O','L',
+  'X','M','S','A','Y','A','N','G',
+  'C','O','O','K','I','E','H','K'
 ];
 
 function initWordSearch() {
   const container = document.getElementById("word-grid");
   container.innerHTML = "";
-  selectedWord = "";
   foundWords = [];
 
-  // Reset tag kata
   targetWords.forEach(w => {
     const el = document.getElementById(`target-${w}`);
     if (el) el.classList.remove("found");
@@ -80,23 +77,20 @@ function initWordSearch() {
     cell.onclick = () => {
       cell.classList.toggle("selected");
       
-      // Ambil semua huruf yang terpilih
       let currentSelection = "";
       document.querySelectorAll(".grid-cell.selected").forEach(c => {
         currentSelection += c.innerText;
       });
 
-      // Cek apakah membentuk salah satu kata target
       targetWords.forEach(word => {
         if (currentSelection.includes(word) && !foundWords.includes(word)) {
           foundWords.push(word);
           const wordTag = document.getElementById(`target-${word}`);
           if (wordTag) wordTag.classList.add("found");
 
-          // Jika semua 6 kata sudah ditemukan
           if (foundWords.length === targetWords.length) {
             setTimeout(() => {
-              alert("Hebat banget! Kamu berhasil menemukan semua 6 kata rahasia! 🎉💖");
+              alert("WOAH HEBAT! Kamu berhasil nemuin semua kata menyamping, menurun, & menyilang! 🎉💖");
               nextSlide('slide3');
             }, 300);
           }
@@ -107,10 +101,10 @@ function initWordSearch() {
   });
 }
 
-/* ---- GAME 2: TANGKAP COOKIE DENGAN TIMER ---- */
+/* ---- GAME 2: TANGKAP COOKIE EXTREME MODE (BANYAK & NGEBUT) ---- */
 function startGame() {
   score = 0;
-  timeLeft = 15;
+  timeLeft = 10; // Waktu dipangkas jadi 10 detik!
   document.getElementById("score").innerText = score;
   document.getElementById("timer").innerText = timeLeft;
 
@@ -135,17 +129,18 @@ function startGame() {
     document.getElementById("timer").innerText = timeLeft;
     if (timeLeft <= 0) {
       stopGame();
-      if (score >= 5) {
-        alert(`Hebat! Kamu berhasil nangkep ${score} Dubai Cookie! 🥳✨`);
+      if (score >= 7) { // Harus nangkep minimal 7 cookie!
+        alert(`JAGO BANGET! Kamu nangkep ${score} Dubai Cookie ngebut! 🥳✨`);
         nextSlide('slide4');
       } else {
-        alert(`Waktu habis! Kamu cuma dapet ${score} cookie. Coba lagi ya! 😜`);
+        alert(`Waktu habis! Cuma dapet ${score}/7 cookie. Kurang cepet nih, coba lagi wkwkwk! 😜`);
         startGame();
       }
     }
   }, 1000);
 
-  gameInterval = setInterval(() => createCookie(), 700);
+  // Cookie muncul super cepat (setiap 300ms)
+  gameInterval = setInterval(() => createCookie(), 300);
 }
 
 function stopGame() {
@@ -160,13 +155,14 @@ function createCookie() {
 
   const cookie = document.createElement("div");
   cookie.classList.add("cookie");
-  cookie.style.left = Math.random() * (container.clientWidth - 40) + "px";
+  cookie.style.left = Math.random() * (container.clientWidth - 35) + "px";
   cookie.style.top = "0px";
   container.appendChild(cookie);
 
   let posY = 0;
+  // Kecepatan jatuh cookie dipercepat (posY += 8)
   const fall = setInterval(() => {
-    posY += 4;
+    posY += 8;
     cookie.style.top = posY + "px";
     const cRect = cookie.getBoundingClientRect();
     const bRect = basket.getBoundingClientRect();
