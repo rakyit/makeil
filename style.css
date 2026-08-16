@@ -37,20 +37,46 @@ input[type="text"] {
 
 .error { color: red; font-size: 12px; }
 
-/* Grid Cari Kata */
-.grid-container {
+/* Word Search 6 Kata (Grid 8x8) */
+.word-list-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.word-tag {
+  background: #fff0f3;
+  color: #ff4d6d;
+  border: 1px solid #ffb7c5;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.word-tag.found {
+  background: #28a745;
+  color: white;
+  border-color: #28a745;
+  text-decoration: line-through;
+}
+
+.grid-container-large {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
-  margin: 15px auto;
-  max-width: 230px;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  margin: 10px auto;
+  max-width: 280px;
 }
 
 .grid-cell {
   background: #fff0f3;
   border: 1px solid #ffb7c5;
-  border-radius: 8px;
-  padding: 10px 0;
+  border-radius: 6px;
+  padding: 6px 0;
+  font-size: 12px;
   font-weight: bold;
   cursor: pointer;
   user-select: none;
