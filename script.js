@@ -1,12 +1,12 @@
 const truePassword = "kamu"; // Password slide 1
 const pesanSurat = "Makasih ya udah mau ngeluangin waktu buat maenin game dan liat foto-foto kita. Dari awal kenal sampai sekarang, kehadiran kamu selalu jadi hal manis buat aku. Makanya hari ini aku pengen jujur sama kamu...";
 
-// Data Foto (Upload foto1.jpg s/d foto6.jpg di GitHub)
+// Data Foto (Pastikan foto1.jpg s/d foto6.jpg sudah di-upload ke GitHub)
 const photos = [
   { src: "foto1.jpg", desc: "Momen favorit pertama bareng kamu 💖" },
   { src: "foto2.jpg", desc: "Lucu banget ekspresi kamu di sini 🥰" },
   { src: "foto3.jpg", desc: "Kenangan manis yang gak bakal aku lupain ✨" },
-  { src: "foto4.jpg", desc: "Selalu suka kalau ngeliat foto exhibits ini 📸" },
+  { src: "foto4.jpg", desc: "Selalu suka kalau ngeliat foto ini 📸" },
   { src: "foto5.jpg", desc: "Hari dimana kita banyak ketawa bareng 😂" },
   { src: "foto6.jpg", desc: "Foto terindah bareng orang paling favorit ❤️" }
 ];
@@ -43,11 +43,11 @@ function checkPassword() {
   else document.getElementById("errorMsg").innerText = "Salah dong, coba lagi! 😜";
 }
 
-/* ---- GAME 1: CARI 6 KATA (MENYAMPING, MENURUN, MENYILANG) ---- */
+/* ---- GAME 1: CARI 6 KATA (LOGIKA FIX TANPA STUCK) ---- */
 const targetWords = ["DUBAI", "MANIS", "SAYANG", "CINTA", "COOKIE", "KAMU"];
 let foundWords = [];
 
-// Grid 8x8 variatif: Arah Menyamping (MANIS, KAMU), Menurun (DUBAI, CINTA), Menyilang (SAYANG, COOKIE)
+// Grid 8x8 variatif
 const gridData = [
   'D','S','M','A','N','I','S','C',
   'U','A','K','A','M','U','O','I',
@@ -76,35 +76,54 @@ function initWordSearch() {
 
     cell.onclick = () => {
       cell.classList.toggle("selected");
-      
-      let currentSelection = "";
-      document.querySelectorAll(".grid-cell.selected").forEach(c => {
-        currentSelection += c.innerText;
-      });
-
-      targetWords.forEach(word => {
-        if (currentSelection.includes(word) && !foundWords.includes(word)) {
-          foundWords.push(word);
-          const wordTag = document.getElementById(`target-${word}`);
-          if (wordTag) wordTag.classList.add("found");
-
-          if (foundWords.length === targetWords.length) {
-            setTimeout(() => {
-              alert("WOAH HEBAT! Kamu berhasil nemuin semua kata menyamping, menurun, & menyilang! 🎉💖");
-              nextSlide('slide3');
-            }, 300);
-          }
-        }
-      });
+      checkWords();
     };
     container.appendChild(cell);
   });
 }
 
-/* ---- GAME 2: TANGKAP COOKIE EXTREME MODE (BANYAK & NGEBUT) ---- */
+function checkWords() {
+  // Ambil semua kotak yang sedang dipilih
+  const selectedCells = Array.from(document.querySelectorAll(".grid-cell.selected"));
+  const selectedText = selectedCells.map(c => c.innerText).join("");
+
+  targetWords.forEach(word => {
+    if (!foundWords.includes(word)) {
+      // Cek apakah huruf-huruf kata tersebut terkandung di dalam kotak yang diklik
+      let match = true;
+      let tempText = selectedText;
+
+      for (let char of word) {
+        if (tempText.includes(char)) {
+          tempText = tempText.replace(char, ""); // Hapus huruf yang sudah cocok untuk pengujian
+        } else {
+          match = false;
+          break;
+        }
+      }
+
+      // Jika cocok, tandai kata sebagai ditemukan dan coret tag-nya
+      if (match && selectedText.length >= word.length) {
+        foundWords.push(word);
+        const wordTag = document.getElementById(`target-${word}`);
+        if (wordTag) wordTag.classList.add("found");
+
+        // Jika 6 kata sudah tercoret semua
+        if (foundWords.length === targetWords.length) {
+          setTimeout(() => {
+            alert("WOAH HEBAT! Semua 6 kata berhasil kamu temukan! 🎉💖");
+            nextSlide('slide3');
+          }, 300);
+        }
+      }
+    }
+  });
+}
+
+/* ---- GAME 2: TANGKAP COOKIE EXTREME MODE ---- */
 function startGame() {
   score = 0;
-  timeLeft = 10; // Waktu dipangkas jadi 10 detik!
+  timeLeft = 10;
   document.getElementById("score").innerText = score;
   document.getElementById("timer").innerText = timeLeft;
 
@@ -129,17 +148,16 @@ function startGame() {
     document.getElementById("timer").innerText = timeLeft;
     if (timeLeft <= 0) {
       stopGame();
-      if (score >= 7) { // Harus nangkep minimal 7 cookie!
-        alert(`JAGO BANGET! Kamu nangkep ${score} Dubai Cookie ngebut! 🥳✨`);
+      if (score >= 7) {
+        alert(`JAGO BANGET! Kamu nangkep ${score} Dubai Cookie! 🥳✨`);
         nextSlide('slide4');
       } else {
-        alert(`Waktu habis! Cuma dapet ${score}/7 cookie. Kurang cepet nih, coba lagi wkwkwk! 😜`);
+        alert(`Waktu habis! Cuma dapet ${score}/7 cookie. Coba lagi ya! 😜`);
         startGame();
       }
     }
   }, 1000);
 
-  // Cookie muncul super cepat (setiap 300ms)
   gameInterval = setInterval(() => createCookie(), 300);
 }
 
@@ -160,7 +178,6 @@ function createCookie() {
   container.appendChild(cookie);
 
   let posY = 0;
-  // Kecepatan jatuh cookie dipercepat (posY += 8)
   const fall = setInterval(() => {
     posY += 8;
     cookie.style.top = posY + "px";
